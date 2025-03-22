@@ -8,7 +8,7 @@ router.get("/characters", (req, res) => {
 
 // get a single character
 router.get("/character/:id", (req, res) => {
-  // create simpsons
+  // create simpsons copy
   const _simpson = [...req.simpsons];
   const character = _simpson.find((char) => {
     return char.id === Number(req.params.id);

@@ -2,17 +2,18 @@ const express = require("express");
 const router = express.Router();
 
 router.delete("/character/:id", (req, res) => {
-  const _simpsons = [...req.simpsons];
-  const index = Number(req.params.id);
-  if (index === -1) {
-    return res.status(404).send.json({ message: "not character found" });
-  }
-  _simpsons.splice(index, 1);
-  simpsons = _simpsons;
+  const id = Number(req.params.id);
 
-  res.status(202).json({
-    message: "sucessful deteled id",
+  const indexOf = req.simpsons.findIndex((item) => {
+    return item.id === id;
   });
+  if (indexOf < 0) {
+    res.send({ status: 0, reason: "id not found" });
+  }
+
+  req.simpsons.splice(indexOf, 1);
+
+  res.send({ satus: 1 });
 });
 
 router.delete("/pop/character", (req, res) => {

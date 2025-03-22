@@ -19,6 +19,8 @@ app.use("/get", require("./routes/get"));
 app.use("/delete", require("./routes/delete"));
 // update
 app.use("/update", require("./routes/update"));
+// create
+app.use("/add", require("./routes/create"));
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
