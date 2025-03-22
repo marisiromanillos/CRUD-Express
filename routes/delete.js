@@ -2,21 +2,25 @@ const express = require("express");
 const router = express.Router();
 
 router.delete("/character/:id", (req, res) => {
-  const _simpson = [...req.simpsons]; // Create a copy of the simpsons array
-  const id = Number(req.params.id); // Get the ID from URL parameters
-
-  const index = _simpson.findIndex((character) => character.id === id);
-
+  const _simpsons = [...req.simpsons];
+  const index = Number(req.params.id);
   if (index === -1) {
-    return res.status(404).json({ message: "Character not found" });
+    return res.status(404).send.json({ message: "not character found" });
   }
+  _simpsons.splice(index, 1);
+  simpsons = _simpsons;
 
-  _simpson.splice(index, 1); // Remove the character at found index
-  simpsons = _simpson; // Update the original array
+  res.status(202).json({
+    message: "sucessful deteled id",
+  });
+});
 
-  res.status(200).json({
-    message: "Character deleted successfully",
-    deletedId: id,
+router.delete("/pop/character", (req, res) => {
+  const _simpsons = [...req.simpsons];
+  _simpsons.pop();
+  simpsons = _simpsons;
+  res.status(202).json({
+    message: "remove the last element of the array",
     remainingCharacters: simpsons,
   });
 });
