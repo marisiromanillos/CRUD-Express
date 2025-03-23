@@ -1,4 +1,5 @@
-const mysl = require("mysql");
+const mysl = require("mysql2");
+const { connect } = require("../routes/get");
 
 // connnection
 
@@ -9,5 +10,15 @@ const connnection = mysl.createConnection({
   port: process.env.PORT,
   database: process.env.DATABASE,
 });
+function asyncMySQL(query) {
+  return new Promise((resolve, reject) => {
+    connnection.query(query, (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(results);
+    });
+  });
+}
 
-connnection.query();
+module.exports = asyncMySQL;
