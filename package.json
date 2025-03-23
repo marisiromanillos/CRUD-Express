@@ -16,6 +16,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mysql2": "^3.14.0",
+    "sha256": "^0.2.0",
     "sql": "^0.78.0"
   },
   "devDependencies": {
