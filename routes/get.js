@@ -6,10 +6,15 @@ const e = require("express");
 // GET all characters
 
 router.get("/characters", async (req, res) => {
-  const results = await asyncMySQL(`SELECT * FROM simpsons`);
-  if (results.length > 0) {
-    res.send({ status: 1, results });
-    return;
+  try {
+    const results = await asyncMySQL(`SELECT * FROM simpsons`);
+    if (results.length > 0) {
+      res.status(200).send(results); // Use 200 for a successful GET
+    } else {
+      res.status(404).send({ status: 0, reason: "No characters found" });
+    }
+  } catch (error) {
+    res.status(500).send({ status: 0, reason: "Database error", error });
   }
 });
 
@@ -20,16 +25,20 @@ router.get("/character/:id", async (req, res) => {
     res.send({ status: 0, reason: "Invalid id" });
     return;
   }
-  // ask sql for the data
-  const results = await asyncMySQL(
-    `SELECT quote, name, image, characterDirection FROM simpsons WHERE id = ${id};`
-  );
 
-  if (results.length > 0) {
-    res.send({ status: 1, results });
-    return;
+  try {
+    const results = await asyncMySQL(
+      `SELECT quote, name, image, characterDirection FROM simpsons WHERE id = ${id};`
+    );
+
+    if (results.length > 0) {
+      res.send({ status: 1, results });
+    } else {
+      res.send({ status: 0, reason: "id not found" });
+    }
+  } catch (error) {
+    res.send({ status: 0, reason: "Error querying database", error });
   }
-  res.send({ status: 0, reason: "id not found" });
 });
 
 module.exports = router;

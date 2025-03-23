@@ -13,6 +13,8 @@ app.use((req, res, next) => {
 
 // get route
 app.use("/get", require("./routes/get"));
+// user create route
+app.use("/create", require("./routes/user"));
 // delete route
 // app.use("/delete", require("./routes/delete"));
 // // update
